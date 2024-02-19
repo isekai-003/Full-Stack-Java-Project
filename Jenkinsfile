@@ -10,10 +10,10 @@ pipeline {
     environment {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "172.31.40.209:8081"
+        NEXUS_URL = "65.2.130.248:8081"
         NEXUS_REPOSITORY = "vprofile-release"
-	NEXUS_REPO_ID    = "vprofile-release"
-        NEXUS_CREDENTIAL_ID = "nexuslogin"
+	    NEXUS_REPO_ID    = "vprofile-release"
+        NEXUS_CREDENTIAL_ID = "nexusip"
         ARTVERSION = "${env.BUILD_ID}"
     }
 	
@@ -61,7 +61,7 @@ pipeline {
           }
 
           steps {
-            withSonarQubeEnv('sonar') {
+            withSonarQubeEnv('sonar-server') {
                sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
                    -Dsonar.projectName=vprofile \
                    -Dsonar.projectVersion=1.0 \
