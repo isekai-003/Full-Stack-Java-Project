@@ -8,9 +8,7 @@ pipeline {
     }
 	
     environment {
-        NEXUS_VERSION = "nexus3"
-        NEXUS_PROTOCOL = "http"
-         SNAP_REPO = 'vprofile-snapshot'
+      SNAP_REPO = 'vprofile-snapshot'
 		NEXUS_USER = 'admin'
 		NEXUS_PASS = 'akshay'
 		RELEASE_REPO = 'vprofile-release'
@@ -18,9 +16,7 @@ pipeline {
 		NEXUSIP = '65.2.130.248'
 		NEXUSPORT = '8081'
 		NEXUS_GRP_REPO = 'vpro-mvn-group'
-        NEXUS_REPOSITORY = "vprofile-release"
-	    NEXUS_REPO_ID    = "vprofile-release"
-        NEXUS_CREDENTIAL_ID = "nexusip"
+        NEXUS_LOGIN = 'nexusip'
         ARTVERSION = "${env.BUILD_ID}"
     }
 	
