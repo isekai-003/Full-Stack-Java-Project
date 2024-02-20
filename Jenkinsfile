@@ -114,7 +114,7 @@ pipeline {
                 credentialsId: 'applogin',
                 inventory: 'Full-Stack-Java-Project/ansible/stage.inventory',
                 playbook: 'Full-Stack-Java-Project/ansible/site.yml',
-                 vaultTmpPath: ''
+                disableHostKeyChecking: true,
                     extraVars: [
                         USER: "admin",
                         PASS: "${NEXUSPASS}",
