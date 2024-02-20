@@ -56,6 +56,12 @@ pipeline {
                 }
             }
         }
+         stage('OWASP Dependency Check') {
+            steps {
+                 dependencyCheck additionalArguments: ' --scan ./ ', odcInstallation: 'DP'
+                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
 
         stage('CODE ANALYSIS with SONARQUBE') {
           
@@ -99,6 +105,31 @@ pipeline {
                 )
             }
         }
+          stage('Ansible Deploy to staging'){
+            steps {
+                ansiblePlaybook([
+                inventory   : 'ansible/stage.inventory',
+                playbook    : 'ansible/site.yml',
+                installation: 'ansible',
+                colorized   : true,
+			    credentialsId: 'applogin',
+			    disableHostKeyChecking: true,
+                extraVars   : [
+                   	USER: "admin",
+                    PASS: "${NEXUS_PASS}",
+			        nexusip: "65.2.184.187",
+			        reponame: "vprofile-release",
+			        groupid: "QA",
+			        time: "${env.BUILD_TIMESTAMP}",
+			        build: "${env.BUILD_ID}",
+                    artifactid: "vproapp",
+			        vprofile_version: "vproapp-${env.BUILD_ID}-${env.BUILD_TIMESTAMP}.war"
+                ]
+             ])
+            }
+        }
+
+    }
        
 
 
