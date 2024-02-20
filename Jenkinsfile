@@ -40,17 +40,18 @@ pipeline {
                 sh 'mvn test'
             }
         }
+         stage('OWASP Dependency Check') {
+            steps {
+                 dependencyCheck additionalArguments: ' --scan /var/lib/jenkins/workspace/spring-boot ', odcInstallation: 'DP'
+                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
 
 	stage('INTEGRATION TEST'){
             steps {
                 sh 'mvn verify -DskipUnitTests'
             }
         }
-    stage('OWASP Dependency Check') {
-            steps {
-                 dependencyCheck additionalArguments: ' --scan /var/lib/jenkins/workspace/spring-boot ', odcInstallation: 'DP'
-                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
+   
         }
         stage ('CODE ANALYSIS WITH CHECKSTYLE'){
             steps {
