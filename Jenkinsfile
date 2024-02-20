@@ -18,6 +18,7 @@ pipeline {
 		NEXUS_GRP_REPO = 'vpro-mvn-group'
         NEXUS_LOGIN = 'nexusip'
         ARTVERSION = "${env.BUILD_ID}"
+        NEXUSPASS = credentials('nexuspass')
     }
 	
     stages{
@@ -116,7 +117,7 @@ pipeline {
 			    disableHostKeyChecking: true,
                 extraVars   : [
                    	USER: "admin",
-                    PASS: "${NEXUS_PASS}",
+                    PASS: "${NEXUSPASS}",
 			        nexusip: "65.2.184.187",
 			        reponame: "vprofile-release",
 			        groupid: "QA",
