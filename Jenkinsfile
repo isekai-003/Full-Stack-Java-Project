@@ -46,7 +46,12 @@ pipeline {
                 sh 'mvn verify -DskipUnitTests'
             }
         }
-		
+    stage('OWASP Dependency Check') {
+            steps {
+                 dependencyCheck additionalArguments: ' --scan ./ ', odcInstallation: 'DP'
+                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
         stage ('CODE ANALYSIS WITH CHECKSTYLE'){
             steps {
                 sh 'mvn checkstyle:checkstyle'
@@ -55,12 +60,6 @@ pipeline {
                 success {
                     echo 'Generated Analysis Result'
                 }
-            }
-        }
-         stage('OWASP Dependency Check') {
-            steps {
-                 dependencyCheck additionalArguments: ' --scan ./ ', odcInstallation: 'DP'
-                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
 
