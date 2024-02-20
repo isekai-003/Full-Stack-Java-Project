@@ -13,7 +13,7 @@ pipeline {
 		NEXUS_PASS = 'akshay'
 		RELEASE_REPO = 'vprofile-release'
 		CENTRAL_REPO = 'vpro-mvn-central'
-		NEXUSIP = '65.2.130.248'
+		NEXUSIP = '65.2.184.187'
 		NEXUSPORT = '8081'
 		NEXUS_GRP_REPO = 'vpro-mvn-group'
         NEXUS_LOGIN = 'nexusip'
