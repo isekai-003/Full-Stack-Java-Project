@@ -112,8 +112,8 @@ pipeline {
                 
              ansiblePlaybook ([
                 credentialsId: 'applogin',
-                inventory: 'Full-Stack-Java-Project/ansible/stage.inventory',
-                playbook: 'Full-Stack-Java-Project/ansible/site.yml',
+                inventory: 'ansible/stage.inventory',
+                playbook: 'ansible/site.yml',
                 disableHostKeyChecking: true,
                     extraVars: [
                         USER: "admin",
