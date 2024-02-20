@@ -110,13 +110,7 @@ pipeline {
            stage('Ansible Deploy to staging') {
             steps {
                 
-                 ansiblePlaybook([
-                    inventory: 'ansible/stage.inventory',
-                    playbook: 'ansible/site.yml',
-                    installation: 'ansible',
-                    colorized: true,
-                    credentialsId: 'applogin',
-                    disableHostKeyChecking: true,
+             ansiblePlaybook credentialsId: 'applogin', inventory: 'Full-Stack-Java-Project/ansible/stage.inventory', playbook: 'Full-Stack-Java-Project/ansible/site.yml', vaultTmpPath: ''
                     extraVars: [
                         USER: "admin",
                         PASS: "${NEXUSPASS}",
@@ -128,7 +122,7 @@ pipeline {
                         artifactid: "vproapp",
                         vprofile_version: "vproapp-${env.BUILD_ID}-${env.BUILD_TIMESTAMP}.war"
                     ]
-                  ])
+                  
                 
             }
         }

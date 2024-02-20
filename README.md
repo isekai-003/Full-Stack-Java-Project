@@ -23,4 +23,3 @@ Then look for the file :
 - > mysql -u <user_name> -p accounts < accountsdb.sql
 
 
-ansiblePlaybook credentialsId: 'applogin', inventory: 'Full-Stack-Java-Project/ansible/stage.inventory', playbook: 'Full-Stack-Java-Project/ansible/site.yml', vaultTmpPath: ''
