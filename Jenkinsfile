@@ -42,7 +42,7 @@ pipeline {
         }
     stage('OWASP Dependency Check') {
             steps {
-                 dependencyCheck additionalArguments: ' --scan /var/lib/jenkins/workspace/spring-boot ', odcInstallation: 'DP'
+                 dependencyCheck additionalArguments: ' --scan ./ ', odcInstallation: 'DP'
                  dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
     }
