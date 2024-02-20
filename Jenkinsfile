@@ -117,7 +117,7 @@ pipeline {
 			    credentialsId: 'applogin',
 			    disableHostKeyChecking: true,
                 extraVars   : [
-                   	USER: "admin",
+                   	USER: "${NEXUS_USER}",
                     PASS: "${NEXUSPASS}",
 			        nexusip: "65.2.184.187",
 			        reponame: "vprofile-release",
