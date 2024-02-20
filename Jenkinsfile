@@ -45,6 +45,7 @@ pipeline {
                  dependencyCheck additionalArguments: ' --scan /var/lib/jenkins/workspace/spring-boot ', odcInstallation: 'DP'
                  dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
+    }
 
 	stage('INTEGRATION TEST'){
             steps {
@@ -52,7 +53,7 @@ pipeline {
             }
         }
    
-        }
+        
         stage ('CODE ANALYSIS WITH CHECKSTYLE'){
             steps {
                 sh 'mvn checkstyle:checkstyle'
