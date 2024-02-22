@@ -88,49 +88,26 @@ pipeline {
     //         }
     //       }
     //     }
-           stage("UploadArtifact"){
-            steps{
-                nexusArtifactUploader(
-                  nexusVersion: 'nexus3',
-                  protocol: 'http',
-                  nexusUrl: "${NEXUSIP}:${NEXUSPORT}",
-                  groupId: 'QA',
-                  version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
-                  repository: "${RELEASE_REPO}",
-                  credentialsId: "${NEXUS_LOGIN}",
-                  artifacts: [
-                    [artifactId: 'vproapp',
-                     classifier: '',
-                     file: 'target/vprofile-v2.war',
-                     type: 'war']
-                  ]
-                )
-            }
-        }
-           stage('Ansible Deploy to staging') {
-            steps {
-                
-             ansiblePlaybook ([
-                credentialsId: 'applogin',
-                inventory: 'ansible/stage.inventory',
-                playbook: 'ansible/site.yml',
-                disableHostKeyChecking: true,
-                    extraVars: [
-                        USER: "admin",
-                        PASS: "${NEXUSPASS}",
-                        nexusip: "3.110.197.155",
-                        reponame: "vprofile-release",
-                        groupid: "QA",
-                        time: "${env.BUILD_TIMESTAMP}",
-                        build: "${env.BUILD_ID}",
-                        artifactid: "vproapp",
-                        vprofile_version: "vproapp-${env.BUILD_ID}-${env.BUILD_TIMESTAMP}.war"
-                    ]
-             ])
-                  
-                
-            }
-        }
+        //    stage("UploadArtifact"){
+        //     steps{
+        //         nexusArtifactUploader(
+        //           nexusVersion: 'nexus3',
+        //           protocol: 'http',
+        //           nexusUrl: "${NEXUSIP}:${NEXUSPORT}",
+        //           groupId: 'QA',
+        //           version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
+        //           repository: "${RELEASE_REPO}",
+        //           credentialsId: "${NEXUS_LOGIN}",
+        //           artifacts: [
+        //             [artifactId: 'vproapp',
+        //              classifier: '',
+        //              file: 'target/vprofile-v2.war',
+        //              type: 'war']
+        //           ]
+        //         )
+        //     }
+        // }
+           
     }
     }
        
