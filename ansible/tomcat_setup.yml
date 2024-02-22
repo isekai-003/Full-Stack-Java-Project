@@ -80,7 +80,7 @@
         daemon_reload: yes 
       when: ansible_distribution_major_version > '20' 
 
-    - name: Start & Enable TOmcat 9
+    - name: Start & Enable Tomcat 9
       service:
         name: tomcat
         state: started
