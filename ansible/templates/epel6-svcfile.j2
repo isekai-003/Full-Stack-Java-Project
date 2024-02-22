@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### BEGIN INIT INFO
-# Provides: tomcat7
+# Provides: tomcat9
 # Required-Start: $network
 # Required-Stop: $network
 # Default-Start: 2 3 4 5
@@ -12,15 +12,15 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 start() {
-sh /usr/local/tomcat8/bin/startup.sh
+sh /usr/local/tomcat9/bin/startup.sh
 }
 
 stop() {
-sh /usr/local/tomcat8/bin/shutdown.sh
+sh /usr/local/tomcat9/bin/shutdown.sh
 }
 
 status() {
-pid=$(ps -fe | grep '/usr/local/tomcat8' | grep -v grep | tr -s " " | cut -d" " -f2)
+pid=$(ps -fe | grep '/usr/local/tomcat9' | grep -v grep | tr -s " " | cut -d" " -f2)
   if [ -n "$pid" ]; then
     echo -e "\e[00;32mTomcat is running with pid: $pid\e[00m"
   else
