@@ -139,7 +139,7 @@ pipeline {
                     git config user.email "shamshuddin0003@gmail.com"
                     git config user.name "isekai-003"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${registry}:${BUILD_NUMBER}/g" helm/vprofilecharts/values.yaml
+                    sed -i "s/replaceImageTag/${registry}:${BUILD_NUMBER}/g" Spring-Boot-Kubernetes/helm/vprofilecharts/values.yaml
                     git add Spring-Boot-Kubernetes/helm/vprofilecharts/templates/vproappdep.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
