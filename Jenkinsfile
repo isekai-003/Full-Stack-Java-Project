@@ -130,7 +130,7 @@ pipeline {
         }
         stage('git-checkout') {
             steps {
-                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/isekai-003/Spring-Boot-Kubernetes.git']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/isekai-003/Spring-Boot-Kubernetes.git']])
             }
         }
          stage('Update Deployment File') {
