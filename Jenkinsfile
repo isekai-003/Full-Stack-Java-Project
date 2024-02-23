@@ -24,7 +24,7 @@ pipeline {
         
     }
 	
-    // stages{
+    stages{
         
     //     stage('BUILD'){
     //         agent { label 'node1' }
