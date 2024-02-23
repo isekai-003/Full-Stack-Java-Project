@@ -128,6 +128,25 @@ pipeline {
             }
           }
         }
+         stage('Update Deployment File') {
+        environment {
+            GIT_REPO_NAME = "Full-Stack-Java-Project"
+            GIT_USER_NAME = "isekai-003"
+        }
+        steps {
+            withCredentials([string(credentialsId: 'git', variable: 'GITHUB_TOKEN')]) {
+                sh '''
+                    git config user.email "shamshuddin0003@gmail.com"
+                    git config user.name "isekai-003"
+                    BUILD_NUMBER=${BUILD_NUMBER}
+                    sed -i "s/appimage=${registry}:${BUILD_NUMBER}/g" Spring-Boot-Kubernetes/helm/vprofilecharts/templates/vproappdep.yml
+                    git add Spring-Boot-Kubernetes/helm/vprofilecharts/templates/vproappdep.yml
+                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                '''
+            }
+        }
+    }
 
            
     }
