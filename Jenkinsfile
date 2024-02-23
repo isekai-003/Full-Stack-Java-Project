@@ -98,7 +98,7 @@ pipeline {
     //       }
     //     }
            stage("UploadArtifact"){
-            agent { label 'node2' }
+            agent { label 'node1' }
             steps{
                 nexusArtifactUploader(
                   nexusVersion: 'nexus3',
