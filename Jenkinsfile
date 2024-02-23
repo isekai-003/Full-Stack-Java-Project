@@ -128,6 +128,11 @@ pipeline {
             }
           }
         }
+        stage('git-checkout') {
+            steps {
+                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/isekai-003/Spring-Boot-Kubernetes.git']])
+            }
+        }
          stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "Spring-Boot-Kubernetes"
