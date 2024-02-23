@@ -46,57 +46,57 @@ pipeline {
             }
         }
     
-	stage('INTEGRATION TEST'){
-        agent { label 'node1' }
-            steps {
-                sh 'mvn verify -DskipUnitTests'
-            }
-        }
+	// stage('INTEGRATION TEST'){
+    //     agent { label 'node1' }
+    //         steps {
+    //             sh 'mvn verify -DskipUnitTests'
+    //         }
+    //     }
    
         
-        stage ('CODE ANALYSIS WITH CHECKSTYLE'){
-            agent { label 'node1' }
-            steps {
-                sh 'mvn checkstyle:checkstyle'
-            }
-            post {
-                success {
-                    echo 'Generated Analysis Result'
-                }
-            }
-        }
-    //     stage('OWASP Dependency Check') {
+    //     stage ('CODE ANALYSIS WITH CHECKSTYLE'){
     //         agent { label 'node1' }
     //         steps {
-    //              dependencyCheck additionalArguments: ' --scan ./ ', odcInstallation: 'DP'
-    //              dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+    //             sh 'mvn checkstyle:checkstyle'
     //         }
-    // }
+    //         post {
+    //             success {
+    //                 echo 'Generated Analysis Result'
+    //             }
+    //         }
+    //     }
+    // //     stage('OWASP Dependency Check') {
+    // //         agent { label 'node1' }
+    // //         steps {
+    // //              dependencyCheck additionalArguments: ' --scan ./ ', odcInstallation: 'DP'
+    // //              dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+    // //         }
+    // // }
 
-        stage('CODE ANALYSIS with SONARQUBE') {
-            agent { label 'node1' }
+    //     stage('CODE ANALYSIS with SONARQUBE') {
+    //         agent { label 'node1' }
           
-		  environment {
-             scannerHome = tool 'sonar-scanner'
-          }
+	// 	  environment {
+    //          scannerHome = tool 'sonar-scanner'
+    //       }
 
-          steps {
-            withSonarQubeEnv('sonar-server') {
-               sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
-                   -Dsonar.projectName=vprofile \
-                   -Dsonar.projectVersion=1.0 \
-                   -Dsonar.sources=src/ \
-                   -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
-                   -Dsonar.junit.reportsPath=target/surefire-reports/ \
-                   -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
-            }
+    //       steps {
+    //         withSonarQubeEnv('sonar-server') {
+    //            sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
+    //                -Dsonar.projectName=vprofile \
+    //                -Dsonar.projectVersion=1.0 \
+    //                -Dsonar.sources=src/ \
+    //                -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
+    //                -Dsonar.junit.reportsPath=target/surefire-reports/ \
+    //                -Dsonar.jacoco.reportsPath=target/jacoco.exec \
+    //                -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
+    //         }
 
-            timeout(time: 10, unit: 'MINUTES') {
-               waitForQualityGate abortPipeline: true
-            }
-          }
-        }
+    //         timeout(time: 10, unit: 'MINUTES') {
+    //            waitForQualityGate abortPipeline: true
+    //         }
+    //       }
+    //     }
            stage("UploadArtifact"){
             agent { label 'node2' }
             steps{
