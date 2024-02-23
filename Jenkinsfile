@@ -20,6 +20,7 @@ pipeline {
     //     ARTVERSION = "${env.BUILD_ID}"
     //     NEXUSPASS = credentials('nexuspass')
     DOCKER_IMAGE = "shamshuddin03/vpro:${BUILD_NUMBER}"
+     def dockerImage = docker.image("${DOCKER_IMAGE}")
         
     }
 	
@@ -129,7 +130,6 @@ pipeline {
     }
         stage('git-checkout') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/isekai-003/Spring-Boot-Kubernetes.git']])
             }
         }
          stage('Update Deployment File') {
@@ -139,11 +139,13 @@ pipeline {
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+             checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/isekai-003/Spring-Boot-Kubernetes.git']])
+
                 sh '''
                     git config user.email "shamshuddin0003@gmail.com"
                     git config user.name "isekai-003"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/"${DOCKER_IMAGE}"/g" helm/vprofilecharts/values.yaml
+                    sed -i "s/replaceImageTag/dockerImage/g" helm/vprofilecharts/values.yaml
                     git add .
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
