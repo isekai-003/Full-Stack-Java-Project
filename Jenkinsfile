@@ -1,7 +1,7 @@
 pipeline {
     
 	agent {
-        label 'node1'
+        label 'node1'}
     
 	
 	tools {
@@ -27,6 +27,7 @@ pipeline {
     stages{
         
         stage('BUILD'){
+            agent { label 'node1' }
             steps {
                 sh 'mvn clean install -DskipTests'
             }
@@ -39,12 +40,14 @@ pipeline {
         }
 
 	stage('UNIT TEST'){
+        agent { label 'node1' }
             steps {
                 sh 'mvn test'
             }
         }
     
 	stage('INTEGRATION TEST'){
+        agent { label 'node1' }
             steps {
                 sh 'mvn verify -DskipUnitTests'
             }
@@ -52,6 +55,7 @@ pipeline {
    
         
         stage ('CODE ANALYSIS WITH CHECKSTYLE'){
+            agent { label 'node1' }
             steps {
                 sh 'mvn checkstyle:checkstyle'
             }
@@ -62,6 +66,7 @@ pipeline {
             }
         }
         stage('OWASP Dependency Check') {
+            agent { label 'node1' }
             steps {
                  dependencyCheck additionalArguments: ' --scan ./ ', odcInstallation: 'DP'
                  dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
@@ -69,6 +74,7 @@ pipeline {
     }
 
         stage('CODE ANALYSIS with SONARQUBE') {
+            agent { label 'node1' }
           
 		  environment {
              scannerHome = tool 'sonar-scanner'
@@ -91,11 +97,8 @@ pipeline {
             }
           }
         }
-    }
-    agent {
-        label 'node2'
-    
            stage("UploadArtifact"){
+            agent { label 'node2' }
             steps{
                 nexusArtifactUploader(
                   nexusVersion: 'nexus3',
@@ -114,11 +117,11 @@ pipeline {
                 )
             }
         }
-    }
-    agent {
-        label 'node1'
+    
+    
     
       stage('Build and Push Docker Image') {
+        agent {  label 'node1' }
 
       environment {
         DOCKER_IMAGE = "shamshuddin03/vpro:${BUILD_NUMBER}"
@@ -136,12 +139,14 @@ pipeline {
       }
     }
     stage('Trivy') {
+        agent {  label 'node1' }
             steps {
                  sh "trivy fs ."
             }
         }
         
          stage('Update Deployment File') {
+            agent {  label 'node1' }
         environment {
             GIT_REPO_NAME = "Spring-Boot-Kubernetes"
             GIT_USER_NAME = "isekai-003"
@@ -162,7 +167,7 @@ pipeline {
             }
         }
     }
-    }
+    
 
            
     }
