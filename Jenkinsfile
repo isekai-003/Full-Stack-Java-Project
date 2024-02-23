@@ -128,10 +128,7 @@ pipeline {
         }
       }
     }
-        stage('git-checkout') {
-            steps {
-            }
-        }
+        
          stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "Spring-Boot-Kubernetes"
