@@ -7,20 +7,21 @@ pipeline {
 	jdk "java"	
     }
 	
-    // environment {
-    // //   SNAP_REPO = 'vprofile-snapshot'
-	// // 	NEXUS_USER = 'admin'
-	// // 	NEXUS_PASS = 'akshay'
-	// // 	RELEASE_REPO = 'vprofile-release'
-	// // 	CENTRAL_REPO = 'vpro-mvn-central'
-	// // 	NEXUSIP = '3.110.197.155'
-	// // 	NEXUSPORT = '8081'
-	// // 	NEXUS_GRP_REPO = 'vpro-mvn-group'
-    // //     NEXUS_LOGIN = 'nexusip'
-    // //     ARTVERSION = "${env.BUILD_ID}"
-    // //     NEXUSPASS = credentials('nexuspass')
+    environment {
+    //   SNAP_REPO = 'vprofile-snapshot'
+	// 	NEXUS_USER = 'admin'
+	// 	NEXUS_PASS = 'akshay'
+	// 	RELEASE_REPO = 'vprofile-release'
+	// 	CENTRAL_REPO = 'vpro-mvn-central'
+	// 	NEXUSIP = '3.110.197.155'
+	// 	NEXUSPORT = '8081'
+	// 	NEXUS_GRP_REPO = 'vpro-mvn-group'
+    //     NEXUS_LOGIN = 'nexusip'
+    //     ARTVERSION = "${env.BUILD_ID}"
+    //     NEXUSPASS = credentials('nexuspass')
+    DOCKER_IMAGE = "shamshuddin03/vpro:${BUILD_NUMBER}"
         
-    // }
+    }
 	
     stages{
         
@@ -142,7 +143,7 @@ pipeline {
                     git config user.email "shamshuddin0003@gmail.com"
                     git config user.name "isekai-003"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/dockerImage/g" helm/vprofilecharts/values.yaml
+                    sed -i "s/replaceImageTag/"${DOCKER_IMAGE}"/g" helm/vprofilecharts/values.yaml
                     git add .
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
