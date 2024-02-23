@@ -19,9 +19,7 @@ pipeline {
     //     NEXUS_LOGIN = 'nexusip'
     //     ARTVERSION = "${env.BUILD_ID}"
     //     NEXUSPASS = credentials('nexuspass')
-        registryCredential = 'ecr:ap-south-1:awscreds'
-        appRegistry = '082310533785.dkr.ecr.ap-south-1.amazonaws.com/vprofileappimg'
-        vprofileRegistry = "https://082310533785.dkr.ecr.ap-south-1.amazonaws.com"
+        
     }
 	
     stages{
@@ -110,24 +108,24 @@ pipeline {
         //         )
         //     }
         // }
-         stage('Build App Image') {
-            steps {
-                script {
-                    dockerImage = docker.build( appRegistry + ":$BUILD_NUMBER", "./Docker-app")
-                }
+
+      stage('Build and Push Docker Image') {
+
+      environment {
+        DOCKER_IMAGE = "shamshuddin03/vpro:${BUILD_NUMBER}"
+        // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
+        REGISTRY_CREDENTIALS = credentials('dockerlogin')
+      }
+      steps {
+        script {
+            sh 'cd Full-Stack-Java-Project/Docker-app && docker build -t ${DOCKER_IMAGE} .'
+            def dockerImage = docker.image("${DOCKER_IMAGE}")
+            docker.withRegistry('https://index.docker.io/v1/', "dockerlogin") {
+                dockerImage.push()
             }
         }
-        
-        stage('Upload App Image') {
-          steps{
-            script {
-              docker.withRegistry( vprofileRegistry, registryCredential ) {
-                dockerImage.push("$BUILD_NUMBER")
-                dockerImage.push('latest')
-              }
-            }
-          }
-        }
+      }
+    }
         stage('git-checkout') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/isekai-003/Spring-Boot-Kubernetes.git']])
