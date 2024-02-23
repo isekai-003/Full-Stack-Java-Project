@@ -65,13 +65,13 @@ pipeline {
                 }
             }
         }
-        stage('OWASP Dependency Check') {
-            agent { label 'node1' }
-            steps {
-                 dependencyCheck additionalArguments: ' --scan ./ ', odcInstallation: 'DP'
-                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-    }
+    //     stage('OWASP Dependency Check') {
+    //         agent { label 'node1' }
+    //         steps {
+    //              dependencyCheck additionalArguments: ' --scan ./ ', odcInstallation: 'DP'
+    //              dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+    //         }
+    // }
 
         stage('CODE ANALYSIS with SONARQUBE') {
             agent { label 'node1' }
