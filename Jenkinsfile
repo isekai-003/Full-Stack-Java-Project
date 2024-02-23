@@ -8,17 +8,17 @@ pipeline {
     }
 	
     environment {
-      SNAP_REPO = 'vprofile-snapshot'
-		NEXUS_USER = 'admin'
-		NEXUS_PASS = 'akshay'
-		RELEASE_REPO = 'vprofile-release'
-		CENTRAL_REPO = 'vpro-mvn-central'
-		NEXUSIP = '3.110.197.155'
-		NEXUSPORT = '8081'
-		NEXUS_GRP_REPO = 'vpro-mvn-group'
-        NEXUS_LOGIN = 'nexusip'
-        ARTVERSION = "${env.BUILD_ID}"
-        NEXUSPASS = credentials('nexuspass')
+    //   SNAP_REPO = 'vprofile-snapshot'
+	// 	NEXUS_USER = 'admin'
+	// 	NEXUS_PASS = 'akshay'
+	// 	RELEASE_REPO = 'vprofile-release'
+	// 	CENTRAL_REPO = 'vpro-mvn-central'
+	// 	NEXUSIP = '3.110.197.155'
+	// 	NEXUSPORT = '8081'
+	// 	NEXUS_GRP_REPO = 'vpro-mvn-group'
+    //     NEXUS_LOGIN = 'nexusip'
+    //     ARTVERSION = "${env.BUILD_ID}"
+    //     NEXUSPASS = credentials('nexuspass')
         registryCredential = 'ecr:ap-south-1:awscreds'
         appRegistry = '082310533785.dkr.ecr.ap-south-1.amazonaws.com/vprofileappimg'
         vprofileRegistry = "https://082310533785.dkr.ecr.ap-south-1.amazonaws.com"
