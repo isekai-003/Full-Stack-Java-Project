@@ -24,27 +24,27 @@ pipeline {
         
     }
 	
-    stages{
+    // stages{
         
-        stage('BUILD'){
-            agent { label 'node1' }
-            steps {
-                sh 'mvn clean install -DskipTests'
-            }
-            post {
-                success {
-                    echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
-            }
-        }
+    //     stage('BUILD'){
+    //         agent { label 'node1' }
+    //         steps {
+    //             sh 'mvn clean install -DskipTests'
+    //         }
+    //         post {
+    //             success {
+    //                 echo 'Now Archiving...'
+    //                 archiveArtifacts artifacts: '**/target/*.war'
+    //             }
+    //         }
+    //     }
 
-	stage('UNIT TEST'){
-        agent { label 'node1' }
-            steps {
-                sh 'mvn test'
-            }
-        }
+	// stage('UNIT TEST'){
+    //     agent { label 'node1' }
+    //         steps {
+    //             sh 'mvn test'
+    //         }
+    //     }
     
 	// stage('INTEGRATION TEST'){
     //     agent { label 'node1' }
@@ -97,26 +97,26 @@ pipeline {
     //         }
     //       }
     //     }
-           stage("UploadArtifact"){
-            agent { label 'node1' }
-            steps{
-                nexusArtifactUploader(
-                  nexusVersion: 'nexus3',
-                  protocol: 'http',
-                  nexusUrl: "${NEXUSIP}:${NEXUSPORT}",
-                  groupId: 'QA',
-                  version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
-                  repository: "${RELEASE_REPO}",
-                  credentialsId: "${NEXUS_LOGIN}",
-                  artifacts: [
-                    [artifactId: 'vproapp',
-                     classifier: '',
-                     file: 'target/vprofile-v2.war',
-                     type: 'war']
-                  ]
-                )
-            }
-        }
+        //    stage("UploadArtifact"){
+        //     agent { label 'node1' }
+        //     steps{
+        //         nexusArtifactUploader(
+        //           nexusVersion: 'nexus3',
+        //           protocol: 'http',
+        //           nexusUrl: "${NEXUSIP}:${NEXUSPORT}",
+        //           groupId: 'QA',
+        //           version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
+        //           repository: "${RELEASE_REPO}",
+        //           credentialsId: "${NEXUS_LOGIN}",
+        //           artifacts: [
+        //             [artifactId: 'vproapp',
+        //              classifier: '',
+        //              file: 'target/vprofile-v2.war',
+        //              type: 'war']
+        //           ]
+        //         )
+        //     }
+        // }
     
     
     
