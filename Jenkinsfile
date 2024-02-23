@@ -19,21 +19,24 @@ pipeline {
         NEXUS_LOGIN = 'nexusip'
         ARTVERSION = "${env.BUILD_ID}"
         NEXUSPASS = credentials('nexuspass')
+        registryCredential = 'ecr:ap-south-1:awscreds'
+        appRegistry = '082310533785.dkr.ecr.ap-south-1.amazonaws.com/vprofileappimg'
+        vprofileRegistry = "https://082310533785.dkr.ecr.ap-south-1.amazonaws.com"
     }
 	
     stages{
         
-        stage('BUILD'){
-            steps {
-                sh 'mvn clean install -DskipTests'
-            }
-            post {
-                success {
-                    echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
-            }
-        }
+        // stage('BUILD'){
+        //     steps {
+        //         sh 'mvn clean install -DskipTests'
+        //     }
+        //     post {
+        //         success {
+        //             echo 'Now Archiving...'
+        //             archiveArtifacts artifacts: '**/target/*.war'
+        //         }
+        //     }
+        // }
 
 	// stage('UNIT TEST'){
     //         steps {
