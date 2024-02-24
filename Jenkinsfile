@@ -152,7 +152,7 @@ pipeline {
             GIT_USER_NAME = "isekai-003"
         }
         steps {
-            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+            withCredentials([string(credentialsId: 'git', variable: 'GITHUB_TOKEN')]) {
              checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/isekai-003/Spring-Boot-Kubernetes.git']])
 
                 sh '''
